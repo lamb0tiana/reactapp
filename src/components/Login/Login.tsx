@@ -2,12 +2,13 @@
  * @author("tiana.randrianarivony@gmail.com")
  */
 import React, {FormEvent, useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import "./login.css";
 import {authenticate} from "../../services/security/authentication";
-const Login = () => {
+const Login = ({onLogin} ) => {
     const [credentials, setCredentials] = useState({ username : 'user1@test.com', password : '0000' });
     const [error, setError] = useState('')
+    const history = useHistory();
 
     const handleChange = ({currentTarget}) => {
         const {name, value} = currentTarget
@@ -17,7 +18,10 @@ const Login = () => {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         try{
-           const token = await authenticate(credentials)
+           const token = await authenticate(credentials, () => {
+               onLogin(true);
+               history.push('/');
+           })
         }catch (e) {
             setError(e.response.data.message)
         }
