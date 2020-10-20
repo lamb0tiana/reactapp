@@ -24,11 +24,15 @@ const setAxiostoken = (token) =>{
     axios.defaults.headers['Authorization'] = `Bearer ${token}`
 }
 
-const init  = () :boolean => {
+const isAuthenticated = () : boolean => {
     const token = window.localStorage.getItem('authToken') || null;
     const jwtData = token ? jwtDecode(token) : null;
     const isAuthenticated  = (jwtData && jwtData.exp * 1000 > new Date().getTime()) || false;
-    if(isAuthenticated) {setAxiostoken(token)}
     return isAuthenticated;
 }
-export {authenticate, logout, init};
+
+const init  = () => {
+    const token = window.localStorage.getItem('authToken')
+    if(isAuthenticated()) {setAxiostoken(token)}
+}
+export {authenticate, logout, init, isAuthenticated};

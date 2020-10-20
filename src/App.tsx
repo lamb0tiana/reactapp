@@ -4,19 +4,19 @@ import {BrowserRouter, Route, Redirect, Switch} from "react-router-dom"
 import Home from "./components/Content/Home";
 import Login from "./components/Login/Login";
 import Navigation from "./components/Navigation";
-import {init} from "./services/security/authentication";
-const isLoggedIn = init()
+import {init, isAuthenticated} from "./services/security/authentication";
+init()
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(isLoggedIn)
+  const [isLoggedIn, setIsAuthenticated] = useState(isAuthenticated())
   return (
       <div className="wrapper">
           <BrowserRouter>
             <Sidebar/>
                 <div id="content">
-                    <Navigation isAuthenticated={isAuthenticated} onLogout={setIsAuthenticated}/>
+                    <Navigation isAuthenticated={isLoggedIn} onLogout={setIsAuthenticated}/>
                     <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route path="/login" render={props => isAuthenticated ? <Redirect to='/' /> : <Login onLogin={setIsAuthenticated}/> } />
+                    <Route path="/login" render={props => isLoggedIn ? <Redirect to='/' /> : <Login onLogin={setIsAuthenticated}/> } />
                     <Redirect to={"/"} from="*"/>
                     </Switch>
                 </div>
