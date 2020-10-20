@@ -4,7 +4,8 @@ import {BrowserRouter, Route, Redirect, Switch} from "react-router-dom"
 import Home from "./components/Content/Home";
 import Login from "./components/Login/Login";
 import Navigation from "./components/Navigation";
-
+import {init} from "./services/security/authentication";
+init()
 function App() {
   return (
       <div className="wrapper">
