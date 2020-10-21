@@ -1,14 +1,16 @@
-import React from "react";
+import React, {useContext} from "react";
 import { NavLink, useHistory} from "react-router-dom";
 import {logout} from "../../services/security/authentication";
+import AuthContext from "../../context/authContext";
 
-const Navigation = ({isAuthenticated, onLogout}) => {
+const Navigation = () => {
     const history = useHistory();
+    const { isAuthenticated, setIsAuthenticated} = useContext(AuthContext)
 
     const handleLogout = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         logout(() =>{
-            onLogout(false);
+            setIsAuthenticated(false);
             history.push('/')
         })
     }
@@ -24,7 +26,7 @@ const Navigation = ({isAuthenticated, onLogout}) => {
                     <li className="nav-item">
                         {
                             isAuthenticated ?
-                        <NavLink onClick={(event) => handleLogout(event)} className="nav-link" to="/logout">Logout</NavLink>:
+                        <NavLink onClick={(event) => handleLogout(event)} className="nav-link" to="/logout">Logout</NavLink> :
                         <NavLink className="nav-link" to="/login">Login</NavLink>
                         }
                     </li>
