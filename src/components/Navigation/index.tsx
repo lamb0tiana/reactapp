@@ -16,24 +16,30 @@ const Navigation = () => {
     }
 
     return        (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-            <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul className="nav navbar-nav ml-auto">
-                    <li className="nav-item">
-                        <NavLink exact className="nav-link" to="/">Home</NavLink>
-                    </li>
-                    <li className="nav-item">
+        <div className="navbar navbar-inverse navbar-fixed-top">
+            <div className="topNav">
+                <div className="container">
+                    <div className="alignR">
+                        <div className="pull-left socialNw">
+                            <a href="#"><span className="icon-twitter"></span></a>
+                            <a href="#"><span className="icon-facebook"></span></a>
+                            <a href="#"><span className="icon-youtube"></span></a>
+                            <a href="#"><span className="icon-tumblr"></span></a>
+                        </div>
+                        <NavLink exact to="/"> <span className="icon-home"></span> Home</NavLink>
                         {
-                            isAuthenticated ?
-                        <NavLink onClick={(event) => handleLogout(event)} className="nav-link" to="/logout">Logout</NavLink> :
-                        <NavLink className="nav-link" to="/login">Login</NavLink>
+                            !isAuthenticated ?
+                            <NavLink  to="/login"><span className="icon-user"></span> My Account</NavLink>:
+                            <NavLink  to="/logout" onClick={(event) => handleLogout(event)}><span className="icon-user"></span> Logout</NavLink>
                         }
-                    </li>
-                </ul>
+                        <a href="register.html"><span className="icon-edit"></span> Free Register </a>
+                        <a href="contact.html"><span className="icon-envelope"></span> Contact us</a>
+                        <a href="cart.html"><span className="icon-shopping-cart"></span> 2 Item(s) - <span
+                            className="badge badge-warning"> $448.42</span></a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </nav>)
+        </div>)
 
 }
 

@@ -1,31 +1,33 @@
 import React, {useState} from 'react';
-import Sidebar from "./components/Sidebar";
-import {BrowserRouter, Route, Redirect, Switch} from "react-router-dom"
-import Home from "./components/Content/Home";
-import Login from "./components/Login/Login";
+import {BrowserRouter} from "react-router-dom"
+import Content from "./components/Content";
 import Navigation from "./components/Navigation";
 import {init, isAuthenticated} from "./services/security/authentication";
 import AuthContext from "./context/authContext";
+import Header from "./components/Header";
+import Menu from "./components/Navigation/Menu";
+import Sidebar from "./components/Sidebar";
+import Footer from "./components/Content/Footer";
 init()
 function App() {
   const [isLoggedIn, setIsAuthenticated] = useState(isAuthenticated());
   const contextValue = {isAuthenticated: isLoggedIn, setIsAuthenticated};
   return (
-      <div className="wrapper">
           <BrowserRouter>
-            <Sidebar/>
             <AuthContext.Provider value={contextValue}>
-                <div id="content">
-                    <Navigation />
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/login" render={props => isLoggedIn ? <Redirect to='/' /> : <Login onLogin={setIsAuthenticated}/> } />
-                        <Redirect to={"/"} from="*"/>
-                    </Switch>
+                <Navigation />
+                <div className="container">
+                    <div id="gototop"></div>
+                    <Header/>
+                    <Menu/>
+                    <div className="row">
+                        <Sidebar/>
+                        <Content/>
+                    </div>
+                    <Footer/>
                 </div>
             </AuthContext.Provider>
           </BrowserRouter>
-      </div>
   )
 }
 
